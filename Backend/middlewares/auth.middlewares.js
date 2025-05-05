@@ -1,4 +1,4 @@
-const UserModel = require("../models/user.model");
+const UserModel = require("../models/user.model.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
@@ -9,7 +9,7 @@ const authUser = async (req, res, next) => {
   if (req.headers.authorization && req.headers.authorization.startsWith("Bearer ")) {
     token = req.headers.authorization.split(" ")[1];
   } 
-  
+
   // Check if the token is present in the cookies
   else if (req.cookies.token) {
     token = req.cookies.token;
@@ -18,6 +18,13 @@ const authUser = async (req, res, next) => {
   if (!token) {
     return res.status(401).json({ message: "Unauthorized: No token provided" });
   }
+
+  const blacklistedToken = await UserModel.find({ token });
+
+  if (blacklistedToken) {
+    return res.status(401).json({ message: "Unauthorized: Token is blacklisted" });
+  }
+  
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
