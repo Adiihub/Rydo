@@ -54,6 +54,7 @@ Registers a new user in the system. The endpoint expects user details in the req
     "updatedAt": "2024-06-01T00:00:00.000Z"
   }
 }
+```
 
 ---
 
@@ -113,7 +114,7 @@ Send a JSON object with the following structure:
   }
 }
 ```
-
+---
 For implementation details, see [`routes/user.routes.js`](routes/user.routes.js), [`controllers/user.controller.js`](controllers/user.controller.js), and [`models/user.model.js`](models/user.model.js).
 
 
