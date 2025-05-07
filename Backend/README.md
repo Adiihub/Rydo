@@ -194,7 +194,7 @@ For implementation details, see [`routes/user.routes.js`](routes/user.routes.js)
 
 ## Endpoint
 
-`POST /captain/register`
+`POST /captains/register`
 
 ## Description
 
