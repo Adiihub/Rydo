@@ -7,6 +7,7 @@ dotenv.config(); // Load environment variables
 const port = process.env.PORT || 3000;
 const connectDB = require('./DB/db');  
 const userRoutes = require('./routes/user.routes');
+const captainRoutes = require('./routes/captain.routes');
 const cookieParser = require('cookie-parser');
 
 connectDB();
@@ -21,6 +22,7 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 app.use('/user', userRoutes);
+app.use('/captain', captainRoutes);
 
 
 

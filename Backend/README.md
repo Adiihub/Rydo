@@ -189,3 +189,71 @@ Logs out the authenticated user by blacklisting the current JWT token and cleari
 For implementation details, see [`routes/user.routes.js`](routes/user.routes.js), [`controllers/user.controller.js`](controllers/user.controller.js), and [`middlewares/auth.middlewares.js`](middlewares/auth.middlewares.js).
 
 
+
+# Captain Registration API Documentation
+
+## Endpoint
+
+`POST /captain/register`
+
+## Description
+
+Registers a new captain in the system. The endpoint expects captain details in the request body, validates the input, hashes the password, creates the captain, and returns an authentication token along with the captain data.
+
+## Request Body
+
+```json
+{
+  "fullname": {
+    "firstname": "Jane",    // Required, minimum 3 characters
+    "lastname": "Smith"     // Required, minimum 3 characters
+  },
+  "email": "jane@example.com",   // Required, must be a valid email
+  "password": "yourpassword",    // Required, minimum 6 characters
+  "vehicle": {
+    "color": "Red",              // Required, minimum 3 characters
+    "plate": "ABC123",           // Required, minimum 3 characters
+    "capacity": 4,               // Required, number
+    "vehicleType": "car"         // Required, one of: "car", "motorcycle", "auto"
+  }
+}
+```
+ 
+## Responses
+
+| Status Code | Description                                                                                   |
+|-------------|----------------------------------------------------------------------------------------------|
+| 201         | Captain registered successfully. Returns `{ token, captain }`.                                |
+| 409         | Captain already exists. Returns `{ message: "Captain already exists" }`.                      |
+| 422         | Validation failed. Returns `{ errors: [...] }` with details about which fields are invalid.   |
+| 500         | Internal server error.                                                                        |
+
+## Example Success Response
+
+```json
+{
+  "token": "jwt_token_here",
+  "captain": {
+    "_id": "captain_id_here",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    "email": "jane@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null,
+    "status": "inactive",
+    "createdAt": "2024-06-01T00:00:00.000Z",
+    "updatedAt": "2024-06-01T00:00:00.000Z"
+  }
+}
+```
+
+---
+
+For implementation details, see [`routes/captain.routes.js`](routes/captain.routes.js), [`controllers/captain.controller.js`](controllers/captain.controller.js), and [`models/captain.model.js`](models/captain.model.js).
