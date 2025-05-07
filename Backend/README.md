@@ -257,3 +257,143 @@ Registers a new captain in the system. The endpoint expects captain details in t
 ---
 
 For implementation details, see [`routes/captain.routes.js`](routes/captain.routes.js), [`controllers/captain.controller.js`](controllers/captain.controller.js), and [`models/captain.model.js`](models/captain.model.js).
+
+
+# Captain API Documentation
+
+## Captain Login
+
+### Endpoint
+
+`POST /captains/login`
+
+### Description
+
+Authenticates a captain using email and password. Returns a JWT token and captain data if credentials are valid.
+
+### Request Body
+
+```json
+{
+  "email": "jane@example.com",    // Required, must be a valid email
+  "password": "yourpassword"      // Required, minimum 6 characters
+}
+```
+
+### Validation Rules
+
+- `email`: Required, valid email.
+- `password`: Required, minimum 6 characters.
+
+### Responses
+
+| Status Code | Description                                                                                   |
+|-------------|----------------------------------------------------------------------------------------------|
+| 200         | Login successful. Returns `{ token, captain }`.                                               |
+| 401         | Invalid credentials. Returns `{ message: "Invalid credentials" }`.                            |
+| 422         | Validation failed. Returns `{ errors: [...] }`.                                               |
+
+### Example Success Response
+
+```json
+{
+  "token": "jwt_token_here",
+  "captain": {
+    "_id": "captain_id_here",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    "email": "jane@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null,
+    "status": "inactive",
+    "createdAt": "2024-06-01T00:00:00.000Z",
+    "updatedAt": "2024-06-01T00:00:00.000Z"
+  }
+}
+```
+
+---
+
+## Captain Profile
+
+### Endpoint
+
+`GET /captains/profile`
+
+### Description
+
+Returns the authenticated captain's profile information. Requires a valid JWT token in the Authorization header or cookie.
+
+### Authentication
+
+- Requires Bearer token in the `Authorization` header or a `token` cookie.
+
+### Responses
+
+| Status Code | Description                                                                                   |
+|-------------|----------------------------------------------------------------------------------------------|
+| 200         | Returns the authenticated captain's profile as JSON.                                          |
+| 401         | Unauthorized. Token missing, invalid, or blacklisted.                                         |
+
+### Example Success Response
+
+```json
+{
+  "captain": {
+    "_id": "captain_id_here",
+    "fullname": {
+      "firstname": "Jane",
+      "lastname": "Smith"
+    },
+    "email": "jane@example.com",
+    "vehicle": {
+      "color": "Red",
+      "plate": "ABC123",
+      "capacity": 4,
+      "vehicleType": "car"
+    },
+    "socketId": null,
+    "status": "inactive",
+    "createdAt": "2024-06-01T00:00:00.000Z",
+    "updatedAt": "2024-06-01T00:00:00.000Z"
+  }
+}
+```
+
+---
+
+## Captain Logout
+
+### Endpoint
+
+`GET /captains/logout`
+
+### Description
+
+Logs out the authenticated captain by blacklisting the current JWT token and clearing the authentication cookie.
+
+### Authentication
+
+- Requires Bearer token in the `Authorization` header or a `token` cookie.
+
+### Responses
+
+| Status Code | Description                                                                                   |
+|-------------|----------------------------------------------------------------------------------------------|
+| 200         | Logout successful. Returns `{ message: "Logged out successfully" }`.                          |
+| 401         | Unauthorized. Token missing, invalid, or blacklisted.                                         |
+
+### Example Success Response
+
+```json
+{
+  "message": "Logged out successfully"
+}
+```
