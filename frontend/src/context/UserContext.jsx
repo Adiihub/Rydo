@@ -1,14 +1,25 @@
-import React from 'react'
+import React, { createContext, useState } from 'react'
 
-const UserContext = ({children}) => { // children lenge cuz we want to wrap the whole app in this context
+export const UserDataContext = createContext()
 
-//   const [user, setUser] = React.useState(null) // user state to store the user data
 
-  return (
-    <div>
-        sdfs
-    </div>
-  )
+const UserContext = ({ children }) => {  //cuz userContext ka children use krna chahta hu
+
+    const [ user, setUser ] = useState({
+        email: '',
+        fullName: {
+            firstName: '',
+            lastName: ''
+        }
+    })
+
+    return (
+        <div>
+            <UserDataContext.Provider value={{ user, setUser }}>
+                {children}
+            </UserDataContext.Provider>
+        </div>
+    )
 }
 
 export default UserContext
