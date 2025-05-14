@@ -1,5 +1,5 @@
 import RdyoImage from "../assets/Rydo.png";
-import React, { useEffect, useRef, useState } from "react";
+import React, {useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import axios from "axios";
@@ -12,7 +12,7 @@ import WaitingForDriver from "../components/WaitingForDriver";
 // import { SocketContext } from '../context/SocketContext';
 import { useContext } from "react";
 import { UserDataContext } from "../context/UserContext";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 // import LiveTracking from '../components/LiveTracking';
 
 const Home = () => {
@@ -36,10 +36,10 @@ const Home = () => {
   const [vehicleType, setVehicleType] = useState(null);
   const [ride, setRide] = useState(null);
 
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
   // const { socket } = useContext(SocketContext)
-  const { user } = useContext(UserDataContext);
+  // const { user } = useContext(UserDataContext);
 
   // useEffect(() => {
   //     socket.emit("join", { userType: "user", userId: user._id })
@@ -184,36 +184,36 @@ const Home = () => {
   );
 
   async function findTrip() {
-    setVehiclePanel(true);
-    setPanelOpen(false);
+    // setVehiclePanel(true);
+    // setPanelOpen(false);
 
-    const response = await axios.get(
-      `${import.meta.env.VITE_BASE_URL}/rides/get-fare`,
-      {
-        params: { pickup, destination },
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    // const response = await axios.get(
+    //   `${import.meta.env.VITE_BASE_URL}/rides/get-fare`,
+    //   {
+    //     params: { pickup, destination },
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   }
+    // );
 
-    setFare(response.data);
+    // setFare(response.data);
   }
 
   async function createRide() {
-    const response = await axios.post(
-      `${import.meta.env.VITE_BASE_URL}/rides/create`,
-      {
-        pickup,
-        destination,
-        vehicleType,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }
-    );
+    // const response = await axios.post(
+    //   `${import.meta.env.VITE_BASE_URL}/rides/create`,
+    //   {
+    //     pickup,
+    //     destination,
+    //     vehicleType,
+    //   },
+    //   {
+    //     headers: {
+    //       Authorization: `Bearer ${localStorage.getItem("token")}`,
+    //     },
+    //   }
+    // );
   }
 
   return (
@@ -225,6 +225,7 @@ const Home = () => {
       />
       <div className="h-screen w-screen">
         {/* image for temporary use  */}
+        {/* <img src="https://miro.medium.com/v2/resize:fit:1400/0*gwMx05pqII5hbfmX.gif" alt="" /> */}
         {/* <LiveTracking /> */}
       </div>
       <div className=" flex flex-col justify-end h-screen absolute top-0 w-full">
